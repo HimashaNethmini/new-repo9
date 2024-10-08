@@ -13,6 +13,7 @@ function App() {
       <div className="App">
         <Navbar />
         <div id="page-body">
+          
           {/* defining routes */}
           <Routes>
             <Route path="/" element={<HomePage />} />
