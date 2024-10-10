@@ -1,11 +1,25 @@
-import express from 'express';
+import express from 'express'
+
+//fake db for now
+let articlesInfo = [{
+    name: 'learn-react',
+    upvotes:0,
+}, {
+    name: 'learn-node',
+    upvotes:0,
+}, {
+    name: 'mongodb',
+    upvotes:0,
+}]
 
 //creating a new express app for the project
 const app = express();
+app.use(express.json());
 
-app.get('/hello', (req,res) =>{
-    res.send('Himasha, so pretty');
-});
+//create an upvode endpoint
+app.put('/api/articles/:name/upvote', (req,res) => {
+
+})
 
 //make the express listen
 const PORT = app.listen(8000, () => {
