@@ -4,12 +4,15 @@ import express from 'express'
 let articlesInfo = [{
     name: 'learn-react',
     upvotes:0,
+    comment:[]
 }, {
     name: 'learn-node',
     upvotes:0,
+    comment:[]
 }, {
     name: 'mongodb',
     upvotes:0,
+    comment:[]
 }]
 
 //creating a new express app for the project
@@ -30,6 +33,21 @@ app.put('/api/articles/:name/upvote', (req,res) => {
     }
 
 });
+
+//making commenting possible
+app.post('/api/articles/:name/comments', (req,res)=> {
+    const { name } = req.params;
+    const { postedBy, text }=req.body;
+
+    const article = articlesInfo.find(a=> a.name === name );
+
+    if (article) {
+        article.comment.push({ postedBy, text })
+        res.send(article.comment);
+    } else {
+        res.send('That article doesn\'t exist')
+    }
+})
 
 //make the express listen
 const PORT = app.listen(8000, () => {
