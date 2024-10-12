@@ -42,12 +42,22 @@ app.get('/api/articles/:name', async (req,res) => {
     res.json(article);
 })
 
-//create an upvode endpoint
-app.put('/api/articles/:name/upvote', (req,res) => {
+//create an upvote endpoint with mongodb
+app.put('/api/articles/:name/upvote', async (req,res) => {
+
     //what artciles need to be upvote
     const { name } = req.params;
+
     //find the artcile with that name
-    const article = articlesInfo.find(a => a.name === name);
+    const client = new MongoClient('mongodb://127.0.0.1:27017');
+    await client.connect();
+
+    const db = client.db('react-blog-db');
+    await db.collection('articles').updateOne({ name }, {
+        $inc: { upvotes: 1 },
+    })
+    const article = await db.collection('articles').findOne({ name });
+
     if(article) {
         article.upvotes += 1;
         res.send(`The ${name} article now has ${article.upvotes} upvotes`);
