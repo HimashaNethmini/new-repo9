@@ -24,12 +24,22 @@ app.use(express.json());
 app.get('/api/articles/:name', async (req,res) => {
     const { name } = req.params;
 
-    const client = new MongoClient('mongofb://127.0.0.1:27017');
+    const client = new MongoClient('mongodb://127.0.0.1:27017');
     await client.connect();
 
     const db = client.db('react-blog-db');
 
-    const article = await db.collection('articles').findOne({name});
+    const article = await db.collection('articles').findOne({ name });
+
+    //if article exist send it, if doesn't exist send 404
+    if (article) {
+        res.json(article)
+    } else {
+        res.sendStatus(404).send('Article not found !')
+    }
+    
+
+    res.json(article);
 })
 
 //create an upvode endpoint
