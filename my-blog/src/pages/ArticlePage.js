@@ -4,6 +4,7 @@ import axios from "axios";
 import NotFoundPage from "./NotFoundPage";
 import { useEffect, useState } from "react";
 import CommentList from "../components/CommentList";
+import AddCommentForm from "../components/AddCommentForm";
 
 const ArticlePage = () => {
   const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [] });
@@ -39,12 +40,16 @@ const ArticlePage = () => {
         <button onClick={addUpvote}>Upvote</button>
         <p>This article has {articleInfo.upvotes}</p>
       </div>
-      
+
       {article.content.map((paragraph, index) => (
         <p key={index}>{paragraph}</p>
       ))}
-      <CommentList comments={articleInfo.comments} />
-    </>
+
+      <AddCommentForm
+            articleName={articleId}
+            onArticleUpdated={updatedArticle => setArticleInfo(updatedArticle)} />
+        <CommentList comments={articleInfo.comments} />
+        </>
   );
 };
 
