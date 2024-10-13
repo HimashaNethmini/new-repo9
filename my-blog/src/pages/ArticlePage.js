@@ -7,8 +7,8 @@ const ArticlePage = () => {
     const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comment: [] });
 
     useEffect(()=>{
-        setArticleInfo({ upvotes: 3, comment: [] });
-    })
+        setArticleInfo({ upvotes: Math.ceil(Math.random() * 10), comment: [] })
+    }, []);
 
     const { articleId } = useParams();
     const article = articles.find(article => article.name === articleId);
