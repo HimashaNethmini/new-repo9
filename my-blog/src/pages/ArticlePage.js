@@ -3,9 +3,10 @@ import articles from './article-content';
 import axios from 'axios';
 import NotFoundPage from './NotFoundPage';
 import { useEffect, useState } from 'react';
+import CommentList from '../components/CommentList';
 
 const ArticlePage = () => {
-    const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comment: [] });
+    const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [] });
     const { articleId } = useParams();
 
     useEffect(() => {
@@ -31,6 +32,7 @@ const ArticlePage = () => {
         {article.content.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
         ))}
+        <CommentList comments={articleInfo.comments} />
         </>
     );
 }
