@@ -1,16 +1,23 @@
 import { useParams } from 'react-router-dom';
 import articles from './article-content';
+import axios from 'axios';
 import NotFoundPage from './NotFoundPage';
 import { useEffect, useState } from 'react';
 
 const ArticlePage = () => {
     const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comment: [] });
+    const { articleId } = useParams();
 
-    useEffect(()=>{
-        setArticleInfo({ upvotes: Math.ceil(Math.random() * 10), comment: [] })
+    useEffect(() => {
+        const loadArticleInfo = async () => {
+            const response = await axios.get(`/api/articles/${articleId}`)
+            const newArticleInfo = response.data
+            setArticleInfo(newArticleInfo);
+        }
+
+        loadArticleInfo();
     }, []);
 
-    const { articleId } = useParams();
     const article = articles.find(article => article.name === articleId);
 
     if(!article) {
