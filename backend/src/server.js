@@ -1,6 +1,14 @@
 import express from 'express'
 import { db, connectToDb } from db.js;
 
+//loading credentials
+const credentials = JSON.parse(
+    fs.readFileSync('../credentials.json')
+);
+admin.initializeApp({
+    credentials: admin.credentials.cert(credentials),
+});
+
 //fake db for now
 let articlesInfo = [{
     name: 'learn-react',
