@@ -5,6 +5,7 @@ import NotFoundPage from "./NotFoundPage";
 import { useEffect, useState } from "react";
 import CommentList from "../components/CommentList";
 import AddCommentForm from "../components/AddCommentForm";
+import useUser from "../hooks/useUser";
 
 const ArticlePage = () => {
   const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [] });
@@ -43,7 +44,7 @@ const ArticlePage = () => {
         {user ? (
           <button onClick={addUpvote}>Upvote</button>
         ) : (
-          <button>Log in</button>
+          <button>LogIn to Upvote</button>
         )}
         <p>This article has {articleInfo.upvotes}</p>
       </div>
