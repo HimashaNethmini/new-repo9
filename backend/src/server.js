@@ -3,7 +3,7 @@ import { db, connectToDb } from db.js;
 
 //loading credentials
 const credentials = JSON.parse(
-    fs.readFileSync('../credentials.json')
+    fs.readFileSync('./credentials.json')
 );
 admin.initializeApp({
     credentials: admin.credentials.cert(credentials),
@@ -54,7 +54,7 @@ app.get('/api/articles/:name', async (req, res) => {
     //enable one time upvoting by Id
     if (article) {
         const upvoteIds = article.upvoteIds || [];
-        article.canUpvote = uid && !upvoteIds.include(uid);
+        article.canUpvote = uid && !upvoteIds.includes(uid);
         res.json(article)
     } else {
         res.sendStatus(404).send('Article not found !')
